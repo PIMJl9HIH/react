@@ -1,19 +1,26 @@
 import React from 'react';
+import Category from './Category';
 
-const Post = ({ postTitle, postComment, handleChange, handleSubmit }) => 
+const Post = ({
+  category,
+  postCategory,
+  postText,
+  postComment,
+  handleChange,
+  handleSubmit
+  }) => 
 	<div className="post"> 
-		<form  className="post__form" name="postForm" onSubmit={handleSubmit}>
-			<div className="post__title">
-				<label>
-					 Enter title
-					<input type="text" name="postTitle" value={postTitle} onChange={handleChange} />
-				</label>
+		<form  className="post__form" name="postForm" onSubmit={handleSubmit} >
+			<div className="post__category">
+				<Category 
+					category={category} 
+					postCategory={postCategory} 
+					handleChange={handleChange}
+				/>
 			</div>
-			<div className="post__comment">
-				<label>
-					Enter comment
-					<textarea  name="postComment" value={postComment} onChange={handleChange} />
-				</label>
+
+			<div className="post__text">
+				<textarea  name="postText" value={postText} onChange={handleChange} placeholder="Enter your post"/>
 			</div>
 			<button type="submit" >Create Post</button>
 		</form>

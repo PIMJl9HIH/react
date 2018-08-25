@@ -7,7 +7,9 @@ const Post = ({
   postText,
   postComment,
   handleChange,
-  handleSubmit
+  handleSubmit,
+  onDismiss,
+  onDismissCreatePostCategory
   }) => 
 	<div className="post"> 
 		<form  className="post__form" name="postForm" onSubmit={handleSubmit} >
@@ -16,6 +18,8 @@ const Post = ({
 					category={category} 
 					postCategory={postCategory} 
 					handleChange={handleChange}
+					onDismiss={onDismiss}
+					onDismissCreatePostCategory={onDismissCreatePostCategory}
 				/>
 			</div>
 

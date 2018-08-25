@@ -6,7 +6,9 @@ const Category = ({
 		postComment,
 		postCategory,
 		handleChange,
-		handleSubmit 
+		handleSubmit,
+		onDismiss,
+		onDismissCreatePostCategory
 	}) => 
 	<div className="category"> 
     <span >choose category </span>
@@ -17,9 +19,10 @@ const Category = ({
     </select>
 
     <div className="postCategories">
-			{postCategory.map((item,index) =>
+			{postCategory.map((item,index, arr) =>
 				<div key={index} className="categoryItem">
 					{item}
+					<span onClick={() => onDismissCreatePostCategory(item,index, arr)}> del </span>
 				</div>
 			)}
 		</div>

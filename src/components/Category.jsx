@@ -1,5 +1,8 @@
 import React from 'react';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {  FormGroup, Label, Input } from 'reactstrap';
+import '../App.css';
 
 const Category = ({ 
 		category,
@@ -10,19 +13,22 @@ const Category = ({
 		onDismiss,
 		onDismissCreatePostCategory
 	}) => 
-	<div className="category"> 
-    <span >choose category </span>
-    <select name="postCategory" onChange={handleChange} >
-    	{category.map((item, index) =>
-				<option key={index} value={item}> {item} </option>
-			)}
-    </select>
+	<div className="category">
+     <FormGroup>
+        <Label for="categorySelectMulti">Choose category</Label>
+        <Input id="categorySelectMulti" type="select" multiple  name="postCategory" onChange={handleChange}  >
+          <option disabled>Select</option>
+          {category.map((item, index) =>
+              <option key={index} value={item}> {item} </option>
+          )}
+        </Input>
+		</FormGroup>
 
     <div className="postCategories">
-			{postCategory.map((item,index, arr) =>
+			{[...new Set(postCategory)].map((item,index, arr) =>
 				<div key={index} className="categoryItem">
 					{item}
-					<span onClick={() => onDismissCreatePostCategory(item,index, arr)}> del </span>
+					<div className="delete" onClick={() => onDismissCreatePostCategory(item,index, arr)}>  </div>
 				</div>
 			)}
 		</div>

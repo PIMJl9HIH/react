@@ -1,87 +1,176 @@
-.App {
-  text-align: center;
+/* redefine Bootstrap 4  some style */
+.btn.btn-sm {
+    padding: 2px 4px;
+    line-height: 1.2;
 }
 
-.container {
-  text-align: center;
+
+
+/* -------------- */
+.main {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+.post-container {
+    width: 550px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    margin: 0 auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+}
+.createPost{
+    width: 200px;
+    margin-bottom: 20px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.post {
+    width: 250px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.post__text {
+    margin-bottom: 10px;
 }
 
-.App-title {
-  font-size: 1.5em;
+.categoryItem {
+    position: relative;
+    margin-bottom: 10px;
 }
 
-.App-intro {
-  font-size: large;
+.post__comment {
+
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.postCommentForm {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
-.page {
-  margin: 20px;
+.post__comment .button {
+    min-height: 30px;
 }
-.interactions {
-  text-align: center;
+
+.commentItem {
+    position: relative;
+    margin-bottom: 5px;
 }
-.table {
-  margin: 20px 0;
+
+.commentConfirmForm {
+    width: calc(100% - 30px);
+    display: flex;
+    justify-content: space-between;
+
 }
-.table-header {
-  display: flex;
-  line-height: 24px;
-  font-size: 16px;
-  padding: 0 10px;
-  justify-content: space-between;
+
+.commentConfirmButton{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 44px;
+    margin: 0;
+    margin-top: 3px;
+    margin-left: 5px;
+    padding: 0;
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: pointer;
+    background-image: url("./img/ok.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    transition: 0.3s ease-out;
 }
-.table-empty {
-  margin: 200px;
-  text-align: center;
-  font-size: 16px;
+
+.commentConfirmButton:hover{
+    opacity: 1;
 }
-.table-row {
-  display: flex;
-  line-height: 24px;
-  white-space: nowrap;
-  margin: 10px 0;
-  padding: 10px;
-  background: #ffffff;
-  border: 1px solid #e3e3e3;
+
+.commentEditField {
+    width: calc(100% - 20px);
 }
-.table-header > span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 0 5px;
+
+.edit-block {
+    width: calc(100% - 30px);
+    display: flex;
+    justify-content: space-between;
 }
-.table-row > span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 0 5px;
+
+.editButton{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 44px;
+    margin: 0;
+    margin-top: 3px;
+    padding: 0;
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: pointer;
+    background-image: url("./img/edit.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    transition: 0.3s ease-out;
 }
-.button-inline {
-  border-width: 0;
-  background: transparent;
-  color: inherit;
-  text-align: inherit;
-  -webkit-font-smoothing: inherit;
-  padding: 0;
-  font-size: inherit;
-  cursor: pointer;
+
+.editButton:hover{
+    opacity: 1;
 }
-.button-active {
-  border-radius: 0;
-  border-bottom: 1px solid #38BB6C;
+
+
+.button {
+    margin-bottom: 5px;
+}
+
+.delete {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 44px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #eee;
+    border-radius: 3px;
+    cursor: pointer;
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    transition: 0.3s ease-out;
+}
+.delete:hover{
+    border: 1px solid #000;
+}
+
+
+.delete:hover:before,
+.delete:hover:after{
+    background-color: #000;
+}
+
+.delete:before,
+.delete:after{
+    content: "";
+    display: inline-block;
+    position: absolute;
+    height: 2px;
+    width: 16px;
+    top: calc(50% - 1px);
+    left: calc(50% - 8px);
+    background-color: #ccc;
+    transition: 0.3s ease-out;
+}
+
+.delete:before{
+    transform: rotate(45deg);
+}
+
+.delete:after{
+    transform: rotate(-45deg);
 }

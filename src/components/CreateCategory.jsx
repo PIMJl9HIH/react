@@ -1,19 +1,50 @@
 import React from 'react';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {  FormGroup, Input, Button } from 'reactstrap';
+import '../App.css';
 
 const Category = ({ 
 		posts,
 		curPost,
-		onDismissCategory
+		onDismissCategory,
+    missingCategory,
+    addCategory,
+    toggleFunc
 	}) => 
 	<div className="categoryWrap"> 
 		
     {posts[curPost].category.map((item, index, arr) =>
        <div className="categoryItem" key={index}>
          {item}
-         <span onClick={() => onDismissCategory(item, index, arr, curPost)}> del </span>
+         <div className="delete" onClick={() => onDismissCategory(item, index, arr, curPost)}> </div>
        </div>
     )}
+
+    <Button
+      className="addCategory button"
+      color="primary"
+      size="sm"
+      outline
+      onClick={(event) => toggleFunc(curPost, event)}
+    >
+      Add Categories
+    </Button>
+
+		<div className="postAddingCategory" style={{display: posts[curPost].visibilityAddingCategory ? 'block' : 'none'}}>
+			<FormGroup>
+				<Input  type="select" multiple  name="curPostCategory" onChange={(event) => addCategory(curPost, event)}>
+					<option disabled>Select</option>
+				{missingCategory(curPost).map((item, index) =>
+				<option key={index} value={item}> {item} </option>
+				)}
+				</Input>
+      </FormGroup>
+		</div>
+
+
+
+
 		
 	</div>
 

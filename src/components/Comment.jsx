@@ -29,13 +29,13 @@ const Comment = ({
       color="secondary"
       size="sm"
       outline
-			onClick={(event) => toggleFunc(curPost, event)}
+			onClick={(event) => toggleFunc(curPost, posts, event)}
 		>
 			Comment
 		</Button>
 
 			<div className="post__comment" style={{display: posts[curPost].visibilityCommentCreate ? 'block' : 'none'}}>
-        <form action="" id={`postCommentForm-${curPost}`} className="postCommentForm" onSubmit={addComment}>
+        <form action="" id={`postCommentForm-${curPost}`} className="postCommentForm" onSubmit={() => addComment(curPost, posts)}>
           <FormGroup>
             <Input id="postCommentArea" type="textarea"  name="postComment"  onChange={handleChange} placeholder="Enter your comment" />
           </FormGroup>
@@ -45,7 +45,7 @@ const Comment = ({
             color="primary"
             size="sm"
             outline
-            onClick={addComment}
+            onClick={() => addComment(curPost, posts)}
           >
             Add
           </Button>
@@ -59,18 +59,18 @@ const Comment = ({
 							?
 							<form action="" id={`commentEditForm-${curPost}${index}`} className="commentConfirmForm">
 								<input type="text"  className="commentEditField" name={`commenteditfield-${curPost}${index}`} defaultValue={item.text}/>
-								<span className="commentConfirmButton" onClick={() => editComment(index, curPost)} ></span>
+								<span className="commentConfirmButton" onClick={() => editComment(index, curPost, posts)} ></span>
 							</form>
 							: 
 							<div className="edit-block">
 								{item.text}
-								<span className="editButton" onClick={() => commentVisibility(index, curPost)} > </span>
+								<span className="editButton" onClick={() => commentVisibility(index, curPost, posts)} > </span>
 							</div>
 						}
 
             <div
               className="delete"
-              onClick={() => onDismissComment(item, index, arr, curPost)}
+              onClick={() => onDismissComment(item, index, arr, curPost, posts)}
             >
             </div>
 					</div>

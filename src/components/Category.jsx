@@ -11,15 +11,16 @@ const Category = ({
 		handleChange,
 		handleSubmit,
 		onDismiss,
-		onDismissCreatePostCategory
+		onDismissCreatePostCategory,
+    onClickChoose
 	}) => 
 	<div className="category">
      <FormGroup>
-        <Label for="categorySelectMulti">Choose category</Label>
-        <Input id="categorySelectMulti" type="select" multiple  name="postCategory" onChange={handleChange}  >
+        <Label for="categoryMulti">Choose category</Label>
+        <Input id="categoryMulti" className="categoryList" type="select" multiple name="postCategory" onClick={onClickChoose}>
           <option disabled>Select</option>
           {category.map((item, index) =>
-              <option key={index} value={item}> {item} </option>
+              <option className="categoryItem"  key={index} value={item}> {item} </option>
           )}
         </Input>
 		</FormGroup>

@@ -13,7 +13,8 @@ const CreatePost = ({
   handleChange,
   handleSubmit,
   onDismiss,
-  onDismissCreatePostCategory
+  onDismissCreatePostCategory,
+  onClickChoose
   }) => 
 	<div className="createPost">
 		<form  className="post__form" name="postForm" onSubmit={handleSubmit} >
@@ -24,6 +25,7 @@ const CreatePost = ({
 					handleChange={handleChange}
 					onDismiss={onDismiss}
 					onDismissCreatePostCategory={onDismissCreatePostCategory}
+          onClickChoose={onClickChoose}
 				/>
 			</div>
 

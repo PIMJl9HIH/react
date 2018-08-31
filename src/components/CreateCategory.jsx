@@ -17,7 +17,7 @@ const Category = ({
     {posts[curPost].category.map((item, index, arr) =>
        <div className="categoryItem" key={index}>
          {item}
-         <div className="delete" onClick={() => onDismissCategory(item, index, arr, curPost)}> </div>
+         <div className="delete" onClick={() => onDismissCategory(item, index, arr, curPost, posts)}> </div>
        </div>
     )}
 
@@ -26,14 +26,14 @@ const Category = ({
       color="primary"
       size="sm"
       outline
-      onClick={(event) => toggleFunc(curPost, event)}
+      onClick={(event) => toggleFunc(curPost, posts, event)}
     >
       Add Categories
     </Button>
 
 		<div className="postAddingCategory" style={{display: posts[curPost].visibilityAddingCategory ? 'block' : 'none'}}>
 			<FormGroup>
-				<Input  type="select" multiple  name="curPostCategory" onChange={(event) => addCategory(curPost, event)}>
+				<Input  type="select" multiple  name="curPostCategory" onClick={(event) => addCategory(curPost, posts, event)}>
 					<option disabled>Select</option>
 				{missingCategory(curPost).map((item, index) =>
 				<option key={index} value={item}> {item} </option>

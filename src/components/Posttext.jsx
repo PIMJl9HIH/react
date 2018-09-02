@@ -17,7 +17,7 @@ const Posttext = ({
       ?
       <form action="" id={`postEditForm-${curPost}`} className="postEditForm">
         <input type="text"  className="postEditField" name={`posteditfield-${curPost}`} defaultValue={item.text}/>
-        <span className="postConfirmButton commentConfirmButton" onClick={() => editPost(curPost, posts)} ></span>
+        <span className="postConfirmButton commentConfirmButton postEdited" onClick={(event) => editPost(curPost, posts, event)} ></span>
       </form>
       :
       <div className="edit-block">

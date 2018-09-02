@@ -5,6 +5,7 @@ import Comment from './components/Comment';
 import CreateCategory from './components/CreateCategory';
 import Posttext from './components/Posttext';
 import Postfilter from './components/Postfilter';
+import Actionpanel from './components/Actionpanel';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'reactstrap';
@@ -100,14 +101,17 @@ class App extends Component {
       newPost.visibilityAddingCategory = false;
       newPost.postEdit = false;
 
+      if(event.target.className.includes('createPost')) {
+        this.setState({
+          actionPanel: ['post created', ...actionPanel],
+        });
+      }
 
       this.setState({
-        actionPanel: [...actionPanel, 'post sozdan'],
         error: false,
         posts: [...posts, newPost],
         postCategory : [],
         postText: ''
-
       })
     }
     
@@ -147,19 +151,25 @@ class App extends Component {
 
   addCategory(curPost, arrPost, event) {
     const {
-      posts
+      posts,
+      actionPanel
     } = this.state;
 
     arrPost[curPost].category = [...new Set([...arrPost[curPost].category, event.target.value])];
     arrPost[curPost].visibilityAddingCategory = false;
-    this.setState({posts: [...posts] });
+    this.setState({
+      posts: [...posts],
+      actionPanel: ['added category', ...actionPanel],
+    });
+
   }
 
   addComment(curIndex, arrPost) {
 
     const { 
       posts,
-      postComment
+      postComment,
+      actionPanel
     } = this.state;
 
     if(postComment.length !== 0) {
@@ -174,14 +184,11 @@ class App extends Component {
 
     this.setState({
       posts: [...posts],
-      postComment: ''
+      postComment: '',
+      actionPanel: ['added post comment', ...actionPanel],
     });
 
   }
-
-
-
-
 
   toggleFunc(curIndex, arrPost, event) {
     const { posts } = this.state;
@@ -201,25 +208,38 @@ class App extends Component {
 
   }
 
-  onDismiss(item, index, arr) {
-    const {posts} = this.state;
+  onDismiss(item, index, arr, event) {
+    const {
+      posts,
+      actionPanel
+    } = this.state;
     const isNotIndex = (item, i) => i !== index;
     const updatePosts = posts.filter(isNotIndex);
 
     this.setState({
       posts: updatePosts
     });
+
+    if(event.target.className.includes('deletePost')) {
+      this.setState({
+        actionPanel: ['post deleted', ...actionPanel],
+      });
+    }
   }
 
   onDismissComment(item, index, arr, curPost, arrPost) {
-    const { posts } = this.state;
+    const {
+      posts,
+      actionPanel
+    } = this.state;
 
     const isNotIndex = (item, i) => i !== index;
 
     arrPost[curPost].comment = posts[curPost].comment.filter(isNotIndex);
 
     this.setState({
-      posts: [...posts]
+      posts: [...posts],
+      actionPanel: ['deleted post comment', ...actionPanel],
     });
   }
 
@@ -246,7 +266,8 @@ class App extends Component {
 
   onDismissCategory(item, index, arr, curPost, arrPost) {
     const { 
-      posts
+      posts,
+      actionPanel
     } = this.state;
 
     const isNotIndex = (item, i) => i !== index;
@@ -257,7 +278,8 @@ class App extends Component {
     }
 
     this.setState({
-      posts: [...posts]
+      posts: [...posts],
+      actionPanel: ['deleted post category', ...actionPanel],
     });
   }
 
@@ -285,7 +307,6 @@ class App extends Component {
     const {
       posts
     } = this.state;
-    // posts[indexPost].comment[indexComment].visibilityComment = true;
     arrPost[indexPost].comment[indexComment].visibilityComment = true;
 
     this.setState({
@@ -310,40 +331,29 @@ class App extends Component {
   editComment(indexComment, indexPost, arrPost) {
     const {
       posts,
-      filterPostCategory
+      actionPanel
     } = this.state;
 
     const input = document.getElementById(`commentEditForm-${indexPost}${indexComment}`)[`commenteditfield-${indexPost}${indexComment}`];
 
-    // posts[indexPost].comment[indexComment].text = input.value;
-    // posts[indexPost].comment[indexComment].visibilityComment = false;
-
     arrPost[indexPost].comment[indexComment].text = input.value;
     arrPost[indexPost].comment[indexComment].visibilityComment = false;
 
-    if(filterPostCategory.length !== 0) {
-      console.log('filterPostCategory  !== 0 ');
-    }
-
     this.setState({
-      posts: [...posts]
+      posts: [...posts],
+      actionPanel: ['edited post comment', ...actionPanel],
     });
-
-
 
   }
 
-  editPost(indexPost, arrPost) {
+  editPost(indexPost, arrPost, event) {
     const {
       posts,
-      filterPostCategory
+      actionPanel
     } = this.state;
 
 
     const input = document.getElementById(`postEditForm-${indexPost}`)[`posteditfield-${indexPost}`];
-
-    // posts[indexPost].text = input.value;
-    // posts[indexPost].postEdit = false;
 
     arrPost[indexPost].text = input.value;
     arrPost[indexPost].postEdit = false;
@@ -351,6 +361,12 @@ class App extends Component {
     this.setState({
       posts: [...posts]
     });
+
+    if(event.target.className.includes('postEdited')) {
+      this.setState({
+        actionPanel: ['post edited', ...actionPanel]
+      });
+    }
 
   }
 
@@ -363,18 +379,12 @@ class App extends Component {
     let result = [];
     const copyPosts = posts.slice();
 
-    // let found = postCategory.some(r=> filterPostCategory.includes(r));
-
     for (let i = 0; i < copyPosts.length; i++) {
-      // console.log(copyPosts[i].category);
-      // console.log(filterPostCategory);
-      // console.log(copyPosts[i].category.some(r => filterPostCategory.includes(r)));
       if (copyPosts[i].category.some(r => filterPostCategory.includes(r))) {
         result.push(copyPosts[i]);
       }
     }
 
-    // console.log(result);
     return result;
 
   }
@@ -388,6 +398,7 @@ class App extends Component {
       postCategory,
       filterPostCategory,
       postText,
+      actionPanel,
       error
     } = this.state;
 
@@ -396,17 +407,35 @@ class App extends Component {
         <div className="container">
           <div className="main">
             <div className="post-container">
-              <CreatePost
-                category={category}
-                postCategory={postCategory}
-                postText={postText}
-                postComment={postComment}
-                handleChange={this.handleChange}
-                handleSubmit={this.handleSubmit}
-                onDismiss={this.onDismiss}
-                onDismissCreatePostCategory={this.onDismissCreatePostCategory}
-                onClickChoose={this.onClickChoose}
-              />
+              <div className="create-filter-wrap">
+                <CreatePost
+                  category={category}
+                  postCategory={postCategory}
+                  postText={postText}
+                  postComment={postComment}
+                  handleChange={this.handleChange}
+                  handleSubmit={this.handleSubmit}
+                  onDismiss={this.onDismiss}
+                  onDismissCreatePostCategory={this.onDismissCreatePostCategory}
+                  onClickChoose={this.onClickChoose}
+                />
+
+                <div className="filter">
+                  <h3>Post Filter</h3>
+                  <Postfilter
+                    posts={posts}
+                    category={category}
+                    filterPostCategory={filterPostCategory}
+                    handleChange={this.handleChange}
+                    handleSubmit={this.handleSubmit}
+                    onDismiss={this.onDismiss}
+                    onDismissFilterPostCategory={this.onDismissFilterPostCategory}
+                    onClickChoose={this.onClickChoose}
+                  />
+                </div>
+
+              </div>
+
               { error
                 ? <div> Something went wrong. </div>
                 : <Post
@@ -432,27 +461,13 @@ class App extends Component {
                 />
               }
             </div>
-            <div className="actionsPanel">
-              <div className="filter">
-                <h3>Post Filter</h3>
-                <Postfilter
-                  posts={posts}
-                  category={category}
-                  filterPostCategory={filterPostCategory}
-                  handleChange={this.handleChange}
-                  handleSubmit={this.handleSubmit}
-                  onDismiss={this.onDismiss}
-                  onDismissFilterPostCategory={this.onDismissFilterPostCategory}
-                  onClickChoose={this.onClickChoose}
-                />
-              </div>
+            <div className="actionPanel">
+              <h3>Action Panel</h3>
+              <Actionpanel
+                actionPanel={actionPanel}
 
-              <div className="panel">
-                <h3>Action Panel</h3>
-                <div className="actionPanel__wrap">
-              </div>
+              />
 
-              </div>
             </div>
           </div>
 
@@ -529,12 +544,12 @@ const Post = ({
             />
 
             <Button
-              className="button"
+              className="button deletePost"
               color="danger"
               size="sm"
               outline
               type="button"
-              onClick={() => onDismiss(item, index, arr)}
+              onClick={(event) => onDismiss(item, index, arr, event)}
             >
               Delete Post
             </Button>
@@ -579,12 +594,12 @@ const Post = ({
           />
 
           <Button
-            className="button"
+            className="button deletePost"
             color="danger"
             size="sm"
             outline
             type="button"
-            onClick={() => onDismiss(item, index, arr)}
+            onClick={(event) => onDismiss(item, index, arr, event)}
           >
             Delete Post
           </Button>

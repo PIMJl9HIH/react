@@ -16,8 +16,8 @@ const CreatePost = ({
   onDismissCreatePostCategory,
   onClickChoose
   }) => 
-	<div className="createPost">
-		<form  className="post__form" name="postForm" onSubmit={handleSubmit} >
+	<div className="createPostWrap">
+		<form  className="post__form createPost" name="postForm" onSubmit={handleSubmit} >
 			<div className="post__category">
 				<Category 
 					category={category} 

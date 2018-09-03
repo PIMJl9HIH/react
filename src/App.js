@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 
 import CreatePost from './components/CreatePost';
-import Comment from './components/Comment';
-import CreateCategory from './components/CreateCategory';
-import Posttext from './components/Posttext';
 import Postfilter from './components/Postfilter';
 import Actionpanel from './components/Actionpanel';
+import Post from './components/Post';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button } from 'reactstrap';
 import './App.css';
-
-
 
 
 class App extends Component {
@@ -59,7 +54,6 @@ class App extends Component {
       filterPostCategory
     } = this.state;
 
-    const value = event.target.value;
     const valueTag = event.target.innerHTML;
 
     if(event.target.className.includes('categoryItem')) {
@@ -88,11 +82,6 @@ class App extends Component {
       actionPanel
     } = this.state;
 
-    if((postCategory.length === 0) || (postText.length === 0)) {
-
-
-    }
-
     if((postCategory.length !== 0) && (postText.length !== 0)) {
 
       const newPost = {};
@@ -118,8 +107,6 @@ class App extends Component {
     
   }
 
-
-
   handleChange(event) {
     const {
       postCategory,
@@ -128,14 +115,12 @@ class App extends Component {
 
     const target = event.target;
     const value = target.value;
-    //const name = target.parentElement.name;
     const name = target.name;
 
     this.setState({
       [name]: value
     });
 
-    // формируем массив категорий для поста
     if (name === 'postCategory' ) {
       this.setState({
         postCategory: [...new Set([...postCategory, value])]
@@ -194,8 +179,7 @@ class App extends Component {
   toggleFunc(curIndex, arrPost, event) {
     const {
       posts,
-      createPostCategoryVisibility,
-      filterCategoryVisibility
+      createPostCategoryVisibility
     } = this.state;
 
     if(event.target.className.includes('addCategory')) {
@@ -219,13 +203,13 @@ class App extends Component {
       }));
     }
 
-
-
     this.setState({
       posts: [...posts]
     });
 
   }
+
+  // --------------------------------------------------------------
 
   onDismiss(item, index, arr, event) {
     const {
@@ -258,13 +242,6 @@ class App extends Component {
       actionPanel: ['comment was deleted', ...actionPanel],
     });
 
-
-    console.log(posts[curPost].comment.filter(isNotIndex));
-    // console.log(item);
-    // console.log(index);
-    console.log(arr);
-    // console.log(curPost);
-    // console.log(arrPost);
   }
 
   onDismissCreatePostCategory(item, index, arr) {
@@ -307,6 +284,8 @@ class App extends Component {
     });
   }
 
+  // --------------------------------------------------------------
+
   missingCategory(curPost) {
     let result = [];
     const category = this.state.category.slice();
@@ -326,7 +305,6 @@ class App extends Component {
     return result;
   }
 
-
   commentVisibility(indexComment, indexPost, arrPost) {
     const {
       posts
@@ -337,13 +315,13 @@ class App extends Component {
       posts: [...posts]
     });
 
-
   }
+
   postVisibility(indexPost, arrPost) {
     const {
       posts
     } = this.state;
-    // posts[indexPost].postEdit = true;
+
     arrPost[indexPost].postEdit = true;
 
     this.setState({
@@ -376,7 +354,6 @@ class App extends Component {
       actionPanel
     } = this.state;
 
-
     const input = document.getElementById(`postEditForm-${indexPost}`)[`posteditfield-${indexPost}`];
 
     arrPost[indexPost].text = input.value;
@@ -391,7 +368,6 @@ class App extends Component {
         actionPanel: ['post was edited', ...actionPanel]
       });
     }
-
   }
 
   filteredResult() {
@@ -408,11 +384,8 @@ class App extends Component {
         result.push(copyPosts[i]);
       }
     }
-
     return result;
-
   }
-
 
   render() {
     const {
@@ -447,9 +420,6 @@ class App extends Component {
                   toggleFunc={this.toggleFunc}
                   createPostCategoryVisibility={createPostCategoryVisibility}
                 />
-
-
-
               </div>
 
               <div className="post-container">
@@ -488,158 +458,17 @@ class App extends Component {
                   filterPostCategory={filterPostCategory}
                   filteredResult={this.filteredResult}
                 />
-
               </div>
-
-
             </div>
             <div className="actionPanel">
               <h3>Action Panel</h3>
-              <Actionpanel
-                actionPanel={actionPanel}
-
-              />
-
+              <Actionpanel actionPanel={actionPanel} />
             </div>
           </div>
-
-
-        
         </div>
       </div>
     );
   }
 }
-
-const Post = ({
-  posts,
-  onDismiss, 
-  postComment, 
-  postCategory,
-  handleChange, 
-  handleSubmit, 
-  addComment,
-  addCategory,
-  toggleFunc,
-  onDismissCategory,
-  showItem,
-  onDismissComment,
-  missingCategory,
-  commentVisibility,
-  postVisibility,
-  editComment,
-  editPost,
-  onClickChoose,
-  filterPostCategory,
-  filteredResult
-  }) =>
-  <div className="post-wrap">
-
-    {(filterPostCategory.length !== 0)
-      ?
-      <div className="filteredPosts">
-        <h5> This is filtered posts </h5>
-
-        {filteredResult().map((item, index, arr) =>
-          <div className="post" key={index}>
-
-              <CreateCategory
-                posts={arr}
-                curPost={index}
-                onDismissCategory={onDismissCategory}
-                missingCategory={missingCategory}
-                addCategory={addCategory}
-                toggleFunc={toggleFunc}
-              />
-
-            <Posttext
-              posts={arr}
-              item={item}
-              curPost={index}
-              editPost={ editPost}
-              postVisibility={ postVisibility}
-            />
-
-            <Button
-              className="button deletePost"
-              color="danger"
-              size="sm"
-              outline
-              type="button"
-              onClick={(event) => onDismiss(item, index, arr, event)}
-            >
-              Delete Post
-            </Button>
-
-            <Comment
-              posts={arr}
-              curPost={index}
-              postComment={postComment}
-              handleChange={handleChange}
-              handleSubmit={handleSubmit}
-              addComment={addComment}
-              toggleFunc={toggleFunc}
-              onDismissCategory={() => onDismissCategory(index)}
-              onDismissComment={onDismissComment}
-              commentVisibility={commentVisibility}
-              editComment={editComment}
-            />
-
-          </div>
-        )}
-      </div>
-      :
-      <div className="notFilteredPosts">
-      {posts.map((item, index, arr) =>
-        <div className="post" key={index}>
-          <div className="post__category">
-
-            <CreateCategory
-              posts={posts}
-              curPost={index}
-              onDismissCategory={onDismissCategory}
-              missingCategory={missingCategory}
-              addCategory={addCategory}
-              toggleFunc={toggleFunc}
-            />
-          </div>
-          <Posttext
-            posts={posts}
-            item={item}
-            curPost={index}
-            editPost={ editPost}
-            postVisibility={ postVisibility}
-          />
-
-          <Button
-            className="button deletePost"
-            color="danger"
-            size="sm"
-            outline
-            type="button"
-            onClick={(event) => onDismiss(item, index, arr, event)}
-          >
-            Delete Post
-          </Button>
-
-          <Comment
-            posts={posts}
-            curPost={index}
-            postComment={postComment}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            addComment={addComment}
-            toggleFunc={toggleFunc}
-            onDismissCategory={() => onDismissCategory(index)}
-            onDismissComment={onDismissComment}
-            commentVisibility={commentVisibility}
-            editComment={editComment}
-          />
-
-        </div>
-      )}
-      </div>
-    }
-  </div>
 
 export default App;

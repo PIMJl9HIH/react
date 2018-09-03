@@ -14,9 +14,14 @@ const CreatePost = ({
   handleSubmit,
   onDismiss,
   onDismissCreatePostCategory,
-  onClickChoose
+  onClickChoose,
+  toggleFunc,
+  createPostCategoryVisibility
   }) => 
 	<div className="createPostWrap">
+
+    <h5	>Create Post Section</h5>
+
 		<form  className="post__form createPost" name="postForm" onSubmit={handleSubmit} >
 			<div className="post__category">
 				<Category 
@@ -26,16 +31,18 @@ const CreatePost = ({
 					onDismiss={onDismiss}
 					onDismissCreatePostCategory={onDismissCreatePostCategory}
           onClickChoose={onClickChoose}
+          toggleFunc={toggleFunc}
+          createPostCategoryVisibility={createPostCategoryVisibility}
 				/>
 			</div>
 
 			<div className="post__text">
         <FormGroup>
-          <Input id="postTextArea" type="textarea"  name="postText" value={postText}  onChange={handleChange} placeholder="Enter your post" />
+          <Input id="postTextArea" type="textarea"  name="postText" value={postText}  onChange={handleChange} placeholder="Enter your post text" />
         </FormGroup>
 
 			</div>
-      <Button type="submit" className="button" color="primary" outline size="sm">Create Post</Button>
+      <Button type="submit" className="createPostButton button " color="success" outline size="sm">Create Post</Button>
 		</form>
 	</div>
 

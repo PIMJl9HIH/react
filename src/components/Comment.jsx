@@ -22,39 +22,41 @@ const Comment = ({
 	return (
 
 		
-	<div className="comment"> 
+	<div className="comment">
 
-		<Button
-			className="createComment button"
-      color="secondary"
+    <Button
+      className="createComment button"
+      color="success"
       size="sm"
       outline
-			onClick={(event) => toggleFunc(curPost, posts, event)}
-		>
-			Comment
-		</Button>
+      onClick={(event) => toggleFunc(curPost, posts, event)}
+    >
+      Comment
+    </Button>
 
 			<div className="post__comment" style={{display: posts[curPost].visibilityCommentCreate ? 'block' : 'none'}}>
         <form action="" id={`postCommentForm-${curPost}`} className="postCommentForm" onSubmit={() => addComment(curPost, posts)}>
-          <FormGroup>
-            <Input id="postCommentArea" type="textarea"  name="postComment"  onChange={handleChange} placeholder="Enter your comment" />
-          </FormGroup>
+
+					<FormGroup>
+						<Input id="postCommentArea" type="textarea"  name="postComment"  onChange={handleChange} placeholder="Enter your comment" />
+					</FormGroup>
 
           <Button
             className="addComment button"
-            color="primary"
+            color="success"
             size="sm"
             outline
             onClick={() => addComment(curPost, posts)}
           >
-            Add
+            Create Comment
           </Button>
 				</form>
-
 			</div>
-			<div className="commentList">
+
+
+			<div className="comment__list">
 				{posts[curPost].comment.map((item, index, arr) =>
-					<div className="commentItem" key={index}>
+					<div className="comment__item" key={index}>
 						{item.visibilityComment
 							?
 							<form action="" id={`commentEditForm-${curPost}${index}`} className="commentConfirmForm">

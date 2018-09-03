@@ -1,10 +1,10 @@
 import React from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {  FormGroup, Label, Input } from 'reactstrap';
+import { ListGroup, ListGroupItem } from 'reactstrap';
 import '../App.css';
 
-const Posttext = ({
+const Postfilter = ({
     posts,
     category,
     postComment,
@@ -13,33 +13,45 @@ const Posttext = ({
     handleSubmit,
     onDismiss,
     onDismissFilterPostCategory,
-    onClickChoose
+    onClickChoose,
+    toggleFunc,
+    filterCategoryVisibility
 
 	}) =>
-  <div className="post__filter" >
+  <div className="filter__posts" >
 
-    <div className="category">
-      <FormGroup>
-        <Label for="categoryFilterMulti">Filter by category</Label>
-        <Input id="categoryFilterMulti" className="categoryList" type="select" multiple   onClick={onClickChoose}  >
-          <option disabled>Select</option>
-          {category.map((item, index) =>
-            <option className="filterCategoryItem" key={index} value={item}> {item} </option>
-          )}
-        </Input>
-      </FormGroup>
-
-      <div className="postCategories">
-        {[...new Set(filterPostCategory)].map((item,index, arr) =>
-          <div key={index} className="categoryItem">
-            {item}
-            <div className="delete" onClick={() => onDismissFilterPostCategory(item,index, arr)}>  </div>
-          </div>
-        )}
+    <div className="filter__category category">
+      <h5>Filter</h5>
+      <div  >
+        <span className="filter-icon " onClick={(event) => toggleFunc(null, null, event)}></span>
+        {
+          filterCategoryVisibility
+            ?
+            <div className="category__list">
+              <ListGroup>
+                {category.map((item, index) =>
+                  <ListGroupItem className="filterCategoryItem" tag="a" href="#" action key={index} onClick={onClickChoose} >{item} </ListGroupItem>
+                )}
+              </ListGroup>
+            </div>
+            :
+            <div></div>
+        }
       </div>
+
     </div>
+
+    <div className="postCategories">
+      {[...new Set(filterPostCategory)].map((item,index, arr) =>
+        <div key={index} className="categoryItem">
+          {item}
+          <div className="delete" onClick={() => onDismissFilterPostCategory(item,index, arr)}>  </div>
+        </div>
+      )}
+    </div>
+
 
 
   </div>
 
-export default Posttext
+export default Postfilter

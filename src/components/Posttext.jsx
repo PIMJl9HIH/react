@@ -1,7 +1,7 @@
 import React from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {  FormGroup, Label, Input } from 'reactstrap';
+// import {  FormGroup, Label, Input } from 'reactstrap';
 import '../App.css';
 
 const Posttext = ({

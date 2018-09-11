@@ -1,0 +1,36 @@
+Hello
+
+Please do this task
+
+
+Flowy
+
+Post
+- Create
+- Edit
+- Delete
+
+Post > Comment
+ - Create
+ - Edit
+ - Delete
+
+Post > Category
+ - Create
+ - Edit
+ - Delete
+
+Actions
+ - Post filter via category
+ - Action panel > it will track and show user every action on feed. For example when post/comment/category added/edited/deleted and filtered.
+
+ 
+Tools
+-- ReactJS library for views
+-- Mobx for state management
+-- Bootstrap for ui
+
+
+
+Best regards
+Alexander
